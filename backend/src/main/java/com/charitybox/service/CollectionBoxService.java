@@ -2,6 +2,7 @@ package com.charitybox.service;
 
 import com.charitybox.dto.CollectionBoxDto;
 import com.charitybox.model.CollectionBox;
+import com.charitybox.model.Currency;
 import com.charitybox.repository.CollectionBoxRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -37,5 +38,16 @@ public class CollectionBoxService {
             throw new EntityNotFoundException("CollectionBox not found: " + id);
         }
         collectionBoxRepository.deleteById(id);
+    }
+
+    public void addMoney(Long boxId, Currency currency, BigDecimal amount) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Amount must be higher or equal to 0");
+        }
+        CollectionBox box = collectionBoxRepository.findById(boxId)
+                .orElseThrow(() -> new EntityNotFoundException("Box not found: " + boxId));
+        box.getCollectedAmounts().merge(currency, amount, BigDecimal::add);
+        collectionBoxRepository.save(box);
     }
 }

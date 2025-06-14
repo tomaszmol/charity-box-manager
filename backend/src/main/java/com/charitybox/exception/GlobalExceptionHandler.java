@@ -2,6 +2,7 @@ package com.charitybox.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +19,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {
         return ResponseEntity.status(400).body(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.status(400).body(ex.getMessage());
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleOtherExceptions(Exception ex) {
