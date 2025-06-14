@@ -3,6 +3,7 @@ package com.charitybox.service;
 import com.charitybox.dto.CollectionBoxDto;
 import com.charitybox.model.CollectionBox;
 import com.charitybox.repository.CollectionBoxRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -29,5 +30,12 @@ public class CollectionBoxService {
                         box.getCollectedAmounts().values().stream().allMatch(amount -> amount.compareTo(BigDecimal.ZERO) == 0)
                 ))
                 .collect(Collectors.toList());
+    }
+
+    public void deleteBox(Long id) {
+        if (!collectionBoxRepository.existsById(id)) {
+            throw new EntityNotFoundException("CollectionBox not found: " + id);
+        }
+        collectionBoxRepository.deleteById(id);
     }
 }
