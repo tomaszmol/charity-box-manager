@@ -36,6 +36,14 @@ public class FundraisingEventService {
                 .orElseThrow(() -> new EntityNotFoundException("Event not found: " + eventId));
         CollectionBox box = collectionBoxRepository.findById(boxId)
                 .orElseThrow(() -> new EntityNotFoundException("Box not found: " + boxId));
+
+        boolean isEmpty = box.getCollectedAmounts().values().stream()
+                .allMatch(amount -> amount.compareTo(BigDecimal.ZERO) == 0);
+
+        if (!isEmpty) {
+            throw new IllegalStateException("Box " + boxId + " is not empty and cannot be assigned.");
+        }
+
         box.setFundraisingEvent(event);
         collectionBoxRepository.save(box);
         return event;
