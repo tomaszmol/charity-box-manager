@@ -33,12 +33,8 @@ public class CollectionBoxController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBox(@PathVariable Long id) {
-        try {
-            collectionBoxService.deleteBox(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        }
+        collectionBoxService.deleteBox(id);
+        return ResponseEntity.noContent().build();
     }
 }
 
