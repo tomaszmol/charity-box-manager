@@ -1,5 +1,6 @@
 package com.charitybox.controller;
 
+import com.charitybox.dto.FundraisingEventDto;
 import com.charitybox.model.FundraisingEvent;
 import com.charitybox.repository.FundraisingEventRepository;
 import com.charitybox.service.FundraisingEventService;
@@ -18,7 +19,7 @@ public class FundraisingEventController {
     }
 
     @PostMapping
-    public FundraisingEvent createEvent(@RequestBody FundraisingEvent event) {
-        return fundraisingEventService.createEvent(event);
+    public FundraisingEvent createEvent(@RequestBody FundraisingEventDto eventDto) {
+        return fundraisingEventService.createEvent(eventDto);
     }
 }
