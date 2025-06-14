@@ -15,14 +15,13 @@ public class CollectionBox {
     @ManyToOne
     private FundraisingEvent fundraisingEvent;
 
-    private boolean registered;
-
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "collection_box_amounts", joinColumns = @JoinColumn(name = "collection_box_id"))
     @MapKeyEnumerated(EnumType.STRING)
     @MapKeyColumn(name = "currency")
     @Column(name = "amount")
     private Map<Currency, BigDecimal> collectedAmounts = new EnumMap<>(Currency.class);
+
 
     public CollectionBox() {
         for (Currency currency : Currency.values()) {
@@ -42,13 +41,6 @@ public class CollectionBox {
         this.fundraisingEvent = fundraisingEvent;
     }
 
-    public boolean isRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(boolean registered) {
-        this.registered = registered;
-    }
 
     public Map<Currency, BigDecimal> getCollectedAmounts() {
         return collectedAmounts;
