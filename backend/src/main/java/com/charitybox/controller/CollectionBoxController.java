@@ -20,8 +20,8 @@ public class CollectionBoxController {
     }
 
     @PostMapping
-    public CollectionBox createBox(@RequestBody CollectionBox box) {
-        return collectionBoxService.createBox(box);
+    public CollectionBox createBox() {
+        return collectionBoxService.createBox(new CollectionBox());
     }
 }
 
