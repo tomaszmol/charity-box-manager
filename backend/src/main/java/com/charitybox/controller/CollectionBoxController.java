@@ -1,12 +1,12 @@
 package com.charitybox.controller;
 
+import com.charitybox.dto.CollectionBoxDto;
 import com.charitybox.model.CollectionBox;
 import com.charitybox.service.CollectionBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/boxes")
@@ -22,6 +22,11 @@ public class CollectionBoxController {
     @PostMapping
     public CollectionBox createBox() {
         return collectionBoxService.createBox(new CollectionBox());
+    }
+
+    @GetMapping
+    public List<CollectionBoxDto> listBoxes() {
+        return collectionBoxService.listBoxes();
     }
 }
 
