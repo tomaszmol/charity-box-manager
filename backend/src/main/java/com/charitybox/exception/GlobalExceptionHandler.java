@@ -23,6 +23,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(400).body(new ErrorResponse(ex.getMessage(), 400));
     }
 
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(Exception ex) {
+        return ResponseEntity.status(400).body(new ErrorResponse("Invalid request body", 400));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleOtherExceptions(Exception ex) {
         return ResponseEntity.status(500).body(new ErrorResponse("Internal Server Error", 500));

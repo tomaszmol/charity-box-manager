@@ -35,6 +35,9 @@ public class FundraisingEventService {
         String currencyStr = dto.getAccountCurrency();
         Currency currency;
 
+        // Intentionally, there is no check whether the initial event account balance is negative.
+        // Allowing a negative (debit) balance is a conscious design decision for this project.
+
         if (currencyStr == null) {
             currency = defaults.getDefaultCurrency();
         } else {
