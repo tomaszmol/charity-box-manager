@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/api/events")
 public class FundraisingEventController {
@@ -21,11 +23,14 @@ public class FundraisingEventController {
     }
 
     @PostMapping
-    public FundraisingEvent createEvent(@RequestBody FundraisingEventDto eventDto) {
-        return fundraisingEventService.createEvent(eventDto);
+    public ResponseEntity<FundraisingEvent> createEvent(@RequestBody FundraisingEventDto eventDto) {
+        FundraisingEvent event = fundraisingEventService.createEvent(eventDto);
+        return ResponseEntity
+                .created(URI.create("/api/events/" + event.getId()))
+                .body(event);
     }
 
-    @PostMapping("/{eventId}/assign-box/{boxId}")
+    @PutMapping("/{eventId}/assign-box/{boxId}")
     public ResponseEntity<Void> assignCollectionBox(
             @PathVariable Long eventId,
             @PathVariable Long boxId) {

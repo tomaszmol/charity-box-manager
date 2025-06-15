@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -24,8 +25,11 @@ public class CollectionBoxController {
     }
 
     @PostMapping
-    public CollectionBox createBox() {
-        return collectionBoxService.createBox(new CollectionBox());
+    public ResponseEntity<CollectionBox> createBox() {
+        CollectionBox box = collectionBoxService.createBox(new CollectionBox());
+        return ResponseEntity
+                .created(URI.create("/api/boxes/" + box.getId()))
+                .body(box);
     }
 
     @GetMapping
@@ -47,7 +51,7 @@ public class CollectionBoxController {
         try {
             currency = Currency.valueOf(request.getCurrency());
         } catch (IllegalArgumentException | NullPointerException ex) {
-            throw new IllegalArgumentException("Non-existing currency: " + request.getCurrency());
+            throw new IllegalArgumentException("Unsupported currency: " + request.getCurrency());
         }
         collectionBoxService.addMoney(id, currency, request.getAmount());
         return ResponseEntity.noContent().build();

@@ -51,7 +51,7 @@ public class CollectionBoxService {
         CollectionBox box = collectionBoxRepository.findById(boxId)
                 .orElseThrow(() -> new EntityNotFoundException("Box not found: " + boxId));
         if (box.getFundraisingEvent() == null) {
-            throw new IllegalStateException("Box is not assigned to any fundraising event. Adding money will prevent assigning this box to an event.");
+            throw new IllegalStateException("Box is not assigned to any fundraising event. Adding money will prevent assigning box: "+ boxId + " to an event.");
         }
         box.getCollectedAmounts().merge(currency, amount, BigDecimal::add);
         collectionBoxRepository.save(box);
