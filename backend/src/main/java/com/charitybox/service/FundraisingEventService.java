@@ -31,13 +31,24 @@ public class FundraisingEventService {
     }
 
 
-    public FundraisingEvent createEvent(FundraisingEventDto dto){
-        // Intentionally, there is no check whether the initial event account balance is negative.
-        // Allowing a negative (debit) balance is a conscious design decision for this project.
+    public FundraisingEvent createEvent(FundraisingEventDto dto) {
+        String currencyStr = dto.getAccountCurrency();
+        Currency currency;
+
+        if (currencyStr == null) {
+            currency = defaults.getDefaultCurrency();
+        } else {
+            try {
+                currency = Currency.valueOf(currencyStr);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Unsupported currency: " + currencyStr);
+            }
+        }
+
         FundraisingEvent event = new FundraisingEvent();
         event.setName(dto.getName());
         event.setAccountBalance(dto.getAccountBalance() != null ? dto.getAccountBalance() : defaults.getDefaultBalance());
-        event.setAccountCurrency(dto.getAccountCurrency() != null ? dto.getAccountCurrency() : defaults.getDefaultCurrency());
+        event.setAccountCurrency(currency);
         return fundraisingEventRepository.save(event);
     }
 

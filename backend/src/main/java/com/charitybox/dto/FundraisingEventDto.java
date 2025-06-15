@@ -8,7 +8,7 @@ public class FundraisingEventDto {
 
     private String name;
     private BigDecimal accountBalance;
-    private Currency accountCurrency;
+    private String accountCurrency;
 
     public String getName() {
         return name;
@@ -26,11 +26,11 @@ public class FundraisingEventDto {
         this.accountBalance = accountBalance;
     }
 
-    public Currency getAccountCurrency() {
+    public String getAccountCurrency() {
         return accountCurrency;
     }
 
-    public void setAccountCurrency(Currency accountCurrency) {
+    public void setAccountCurrency(String accountCurrency) {
         this.accountCurrency = accountCurrency;
     }
 }

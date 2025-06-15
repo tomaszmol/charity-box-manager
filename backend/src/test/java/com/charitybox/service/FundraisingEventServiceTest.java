@@ -47,7 +47,7 @@ class FundraisingEventServiceTest {
         FundraisingEventDto dto = new FundraisingEventDto();
         dto.setName("Charity");
         dto.setAccountBalance(BigDecimal.TEN);
-        dto.setAccountCurrency(Currency.EUR);
+        dto.setAccountCurrency(Currency.EUR.toString());
 
         FundraisingEvent savedEvent = new FundraisingEvent();
         savedEvent.setName("Charity");
@@ -193,7 +193,7 @@ class FundraisingEventServiceTest {
         FundraisingEventDto dto = new FundraisingEventDto();
         dto.setName("Charity");
         dto.setAccountBalance(null);
-        dto.setAccountCurrency(Currency.EUR);
+        dto.setAccountCurrency(Currency.EUR.toString());
 
         when(defaults.getDefaultBalance()).thenReturn(BigDecimal.ZERO);
 

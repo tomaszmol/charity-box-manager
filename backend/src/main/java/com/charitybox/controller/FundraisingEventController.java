@@ -2,6 +2,7 @@ package com.charitybox.controller;
 
 import com.charitybox.dto.FundraisingEventDto;
 import com.charitybox.dto.FundraisingEventReportDto;
+import com.charitybox.model.Currency;
 import com.charitybox.model.FundraisingEvent;
 import com.charitybox.repository.FundraisingEventRepository;
 import com.charitybox.service.FundraisingEventService;
