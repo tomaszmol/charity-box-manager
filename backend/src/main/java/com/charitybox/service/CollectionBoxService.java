@@ -41,12 +41,14 @@ public class CollectionBoxService {
     }
 
     public void addMoney(Long boxId, Currency currency, BigDecimal amount) {
-
         if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Amount must be higher or equal to 0");
         }
         CollectionBox box = collectionBoxRepository.findById(boxId)
                 .orElseThrow(() -> new EntityNotFoundException("Box not found: " + boxId));
+        if (box.getFundraisingEvent() == null) {
+            throw new IllegalStateException("Box is not assigned to any fundraising event. Adding money will prevent assigning this box to an event.");
+        }
         box.getCollectedAmounts().merge(currency, amount, BigDecimal::add);
         collectionBoxRepository.save(box);
     }
