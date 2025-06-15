@@ -92,7 +92,7 @@ class CollectionBoxServiceTest {
         when(collectionBoxRepository.findById(1L)).thenReturn(Optional.of(box));
 
         // Act
-        collectionBoxService.addMoney(1L, Currency.PLN, new BigDecimal("50"));
+        collectionBoxService.addMoney(1L, Currency.PLN.toString(), new BigDecimal("50"));
 
         // Assert
         assertEquals(new BigDecimal("50"), box.getCollectedAmounts().get(Currency.PLN));
@@ -103,7 +103,7 @@ class CollectionBoxServiceTest {
     void addMoney_shouldThrowIfAmountNegative() {
         // Arrange, Act & Assert
         assertThrows(IllegalArgumentException.class, () ->
-                collectionBoxService.addMoney(1L, Currency.PLN, new BigDecimal("-1")));
+                collectionBoxService.addMoney(1L, Currency.PLN.toString(), new BigDecimal("-1")));
     }
 
     @Test
@@ -113,7 +113,7 @@ class CollectionBoxServiceTest {
 
         // Act & Assert
         assertThrows(EntityNotFoundException.class, () ->
-                collectionBoxService.addMoney(1L, Currency.PLN, BigDecimal.ONE));
+                collectionBoxService.addMoney(1L, Currency.PLN.toString(), BigDecimal.ONE));
     }
 
     @Test
@@ -124,7 +124,7 @@ class CollectionBoxServiceTest {
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () ->
-                collectionBoxService.addMoney(1L, Currency.PLN, BigDecimal.ONE));
+                collectionBoxService.addMoney(1L, Currency.PLN.toString(), BigDecimal.ONE));
     }
 
     @Test
@@ -185,6 +185,6 @@ class CollectionBoxServiceTest {
     void addMoney_shouldThrowIfAmountIsNull() {
         // Arrange, Act & Assert
         assertThrows(IllegalArgumentException.class, () ->
-                collectionBoxService.addMoney(1L, Currency.PLN, null));
+                collectionBoxService.addMoney(1L, Currency.PLN.toString(), null));
     }
 }

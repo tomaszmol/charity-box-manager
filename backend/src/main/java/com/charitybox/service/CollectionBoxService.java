@@ -48,7 +48,14 @@ public class CollectionBoxService {
         collectionBoxRepository.deleteById(id);
     }
 
-    public void addMoney(Long boxId, Currency currency, BigDecimal amount) {
+    public void addMoney(Long boxId, String currencyStr, BigDecimal amount) {
+        Currency currency;
+        try {
+            currency = Currency.valueOf(currencyStr);
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            throw new IllegalArgumentException("Unsupported currency: " + currencyStr);
+        }
+
         if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("Amount must be higher or equal to 0");
         }

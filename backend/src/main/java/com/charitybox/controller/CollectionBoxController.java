@@ -47,13 +47,7 @@ public class CollectionBoxController {
     public ResponseEntity<Void> addMoney(
             @PathVariable Long id,
             @RequestBody AddMoneyRequest request) {
-        Currency currency;
-        try {
-            currency = Currency.valueOf(request.getCurrency());
-        } catch (IllegalArgumentException | NullPointerException ex) {
-            throw new IllegalArgumentException("Unsupported currency: " + request.getCurrency());
-        }
-        collectionBoxService.addMoney(id, currency, request.getAmount());
+        collectionBoxService.addMoney(id, request.getCurrency(), request.getAmount());
         return ResponseEntity.noContent().build();
     }
 

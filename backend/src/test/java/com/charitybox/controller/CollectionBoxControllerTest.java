@@ -73,14 +73,18 @@ class CollectionBoxControllerTest {
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isNoContent());
 
-        Mockito.verify(collectionBoxService).addMoney(1L, Currency.PLN, new BigDecimal("10"));
+        Mockito.verify(collectionBoxService).addMoney(1L, Currency.PLN.toString(), new BigDecimal("10"));
     }
+
 
     @Test
     void addMoney_shouldReturnBadRequestForInvalidCurrency() throws Exception {
         AddMoneyRequest req = new AddMoneyRequest();
         req.setCurrency("XXX");
         req.setAmount(new BigDecimal("10"));
+
+        Mockito.doThrow(new IllegalArgumentException("Unsupported currency: XXX"))
+                .when(collectionBoxService).addMoney(anyLong(), eq("XXX"), any());
 
         mockMvc.perform(put("/api/boxes/1/add-money")
                         .contentType(MediaType.APPLICATION_JSON)
