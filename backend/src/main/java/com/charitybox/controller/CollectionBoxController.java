@@ -52,5 +52,11 @@ public class CollectionBoxController {
         collectionBoxService.addMoney(id, currency, request.getAmount());
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/empty")
+    public ResponseEntity<Void> emptyBox(@PathVariable Long id) {
+        collectionBoxService.emptyBox(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 
