@@ -38,9 +38,13 @@ public class CollectionBoxService {
     }
 
     public void deleteBox(Long id) {
-        if (!collectionBoxRepository.existsById(id)) {
-            throw new EntityNotFoundException("CollectionBox not found: " + id);
+        CollectionBox box = collectionBoxRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("CollectionBox not found: " + id));
+        // Empty box first
+        for (Currency currency : box.getCollectedAmounts().keySet()) {
+            box.getCollectedAmounts().put(currency, BigDecimal.ZERO);
         }
+        collectionBoxRepository.save(box);
         collectionBoxRepository.deleteById(id);
     }
 

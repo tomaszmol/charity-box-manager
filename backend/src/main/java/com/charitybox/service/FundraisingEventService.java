@@ -25,7 +25,10 @@ public class FundraisingEventService {
 
     }
 
+
     public FundraisingEvent createEvent(FundraisingEventDto dto){
+        // Intentionally, there is no check whether the initial event account balance is negative.
+        // Allowing a negative (debit) balance is a conscious design decision for this project.
         FundraisingEvent event = new FundraisingEvent();
         event.setName(dto.getName());
         event.setAccountBalance(dto.getAccountBalance() != null ? dto.getAccountBalance() : BigDecimal.ZERO);
