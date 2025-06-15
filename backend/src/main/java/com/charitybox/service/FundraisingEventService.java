@@ -1,6 +1,7 @@
 package com.charitybox.service;
 
 import com.charitybox.dto.FundraisingEventDto;
+import com.charitybox.dto.FundraisingEventReportDto;
 import com.charitybox.model.CollectionBox;
 import com.charitybox.model.Currency;
 import com.charitybox.model.FundraisingEvent;
@@ -10,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FundraisingEventService {
@@ -47,4 +50,15 @@ public class FundraisingEventService {
         box.setFundraisingEvent(event);
         collectionBoxRepository.save(box);
     }
+
+    public List<FundraisingEventReportDto> getFinancialReport() {
+        return fundraisingEventRepository.findAll().stream()
+                .map(event -> new FundraisingEventReportDto(
+                        event.getName(),
+                        event.getAccountBalance(),
+                        event.getAccountCurrency()
+                        ))
+                .collect(Collectors.toList());
+    }
+
 }

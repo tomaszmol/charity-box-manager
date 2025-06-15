@@ -1,6 +1,7 @@
 package com.charitybox.controller;
 
 import com.charitybox.dto.FundraisingEventDto;
+import com.charitybox.dto.FundraisingEventReportDto;
 import com.charitybox.model.FundraisingEvent;
 import com.charitybox.repository.FundraisingEventRepository;
 import com.charitybox.service.FundraisingEventService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
@@ -36,5 +38,10 @@ public class FundraisingEventController {
             @PathVariable Long boxId) {
         fundraisingEventService.assignCollectionBox(eventId, boxId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/financial-report")
+    public List<FundraisingEventReportDto> getFinancialReport() {
+        return fundraisingEventService.getFinancialReport();
     }
 }
