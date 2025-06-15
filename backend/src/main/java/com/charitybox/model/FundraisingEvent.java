@@ -25,6 +25,11 @@ public class FundraisingEvent {
 
     public FundraisingEvent(){}
 
+    public void setId(Long id) {
+        this.id = id;
+
+    }
+
     public Long getId() {
         return id;
     }

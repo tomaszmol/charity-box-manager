@@ -49,4 +49,8 @@ public class CollectionBox {
     public void setCollectedAmounts(Map<Currency, BigDecimal> collectedAmounts) {
         this.collectedAmounts = collectedAmounts;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

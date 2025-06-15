@@ -1,5 +1,6 @@
 package com.charitybox.service;
 
+import com.charitybox.config.FundraisingDefaultsProperties;
 import com.charitybox.dto.FundraisingEventDto;
 import com.charitybox.dto.FundraisingEventReportDto;
 import com.charitybox.model.CollectionBox;
@@ -18,10 +19,14 @@ import java.util.stream.Collectors;
 public class FundraisingEventService {
     private final FundraisingEventRepository fundraisingEventRepository;
     private final CollectionBoxRepository collectionBoxRepository;
+    private final FundraisingDefaultsProperties defaults;
 
-    public FundraisingEventService(FundraisingEventRepository fundraisingEventRepository, CollectionBoxRepository collectionBoxRepository){
+    public FundraisingEventService(FundraisingEventRepository fundraisingEventRepository,
+                                   CollectionBoxRepository collectionBoxRepository,
+                                   FundraisingDefaultsProperties defaults){
         this.fundraisingEventRepository = fundraisingEventRepository;
         this.collectionBoxRepository = collectionBoxRepository;
+        this.defaults = defaults;
 
     }
 
@@ -31,8 +36,8 @@ public class FundraisingEventService {
         // Allowing a negative (debit) balance is a conscious design decision for this project.
         FundraisingEvent event = new FundraisingEvent();
         event.setName(dto.getName());
-        event.setAccountBalance(dto.getAccountBalance() != null ? dto.getAccountBalance() : BigDecimal.ZERO);
-        event.setAccountCurrency(dto.getAccountCurrency() != null ? dto.getAccountCurrency() : Currency.PLN);
+        event.setAccountBalance(dto.getAccountBalance() != null ? dto.getAccountBalance() : defaults.getDefaultBalance());
+        event.setAccountCurrency(dto.getAccountCurrency() != null ? dto.getAccountCurrency() : defaults.getDefaultCurrency());
         return fundraisingEventRepository.save(event);
     }
 
