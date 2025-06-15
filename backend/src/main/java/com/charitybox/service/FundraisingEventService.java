@@ -31,7 +31,7 @@ public class FundraisingEventService {
     }
 
 
-    public FundraisingEvent assignCollectionBox(Long eventId, Long boxId) {
+    public void assignCollectionBox(Long eventId, Long boxId) {
         FundraisingEvent event = fundraisingEventRepository.findById(eventId)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found: " + eventId));
         CollectionBox box = collectionBoxRepository.findById(boxId)
@@ -46,6 +46,5 @@ public class FundraisingEventService {
 
         box.setFundraisingEvent(event);
         collectionBoxRepository.save(box);
-        return event;
     }
 }
